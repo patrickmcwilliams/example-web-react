@@ -5,11 +5,25 @@ import App from './App';
 import { store } from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+
+import { Counter } from './features/counter/Counter';
+
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <App />
+          </Route>
+          <Route path="/counter">
+            <Counter />
+          </Route>
+        </Switch>
+      </Router>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
