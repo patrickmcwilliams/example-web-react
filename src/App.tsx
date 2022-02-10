@@ -1,21 +1,18 @@
-import React from 'react';
-import { MuiThemeProvider } from "material-ui/styles";
-import { BrowserRouter, Link } from 'react-router-dom';
-import './App.css';
+import React, {Fragment } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import Routes from './routes/routes';
 
 function App() {
   return (
-    <Provider store={store}>
-    <MuiThemeProvider>
-      <BrowserRouter>
-        <Routes />
-      </BrowserRouter>
-    </MuiThemeProvider>
-  </Provider>
-
+    <Fragment>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Routes />
+        </BrowserRouter>
+      </Provider>
+    </Fragment>
   );
 }
 

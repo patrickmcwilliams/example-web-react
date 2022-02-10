@@ -1,0 +1,13 @@
+.Home {}
+
+.FormContainer {
+    width: 100vw;
+    min-height: 100vh;
+}
+
+.Form {
+    background-color: lightgray;
+    border-radius: .5rem;
+    padding: 1rem;
+    align-items: center;
+}
