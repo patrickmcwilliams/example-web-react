@@ -1,3 +1,35 @@
+Overview 
+-------- 
+Implement a small browser-based application for pre-approving an investor for a potential investment in a financial vehicle. 
+Requirements 
+------------ 
+Your application should lead a user through the initial portion of qualifying for an investment. It should consist of a landing page to collect basic info about both the investment they are interested in investing in and their own financial situation. Based on this, you should be able to make a simulated network call that will redirect the user to either a new account creation page or a 
+disqualification notice. 
+The styling should be simple, plain but deliberate. 
+* Landing Page 
+The initial page should show a simple form with inputs for the following field: 
+Investment Amount (Currency) 
+Investment Type (Text) eg. “Bond”, “Stocks”, “Real Estate” etc... 
+Total Net Worth (Currency) 
+User Estimated Yearly Income (Currency) 
+User Estimated Credit Score (Number from 300-850) 
+These fields are all required and should validate to type. Provide feedback to the user when they are incorrect or missing information. There should be space for marketing copy (Lorum Ipsem) and controls for moving forward. 
+* Success Page 
+If the api call does not return a disqualification message(see below), this page should have a “Congratulations you qualified” type of message, with some added text for next step instructions (Lorem Ipsum is fine) 
+* Disqualification Page
+Display a simple page with the disqualification message that comes from the api call as well as fake information to get in contact with a customer service. There should be no further way to get off this page or re-enter the information. 
+* API call 
+You should implement a mock fetch call for your backend communication. This call should have the same interface as the real fetch and return a promise wrapped response object. The response should return disqualify message (Lorem Ipsum is fine) if the Investment Amount is more than 1/5th of their Yearly Income, or their Estimated Credit is below 600, or their Investment Amount is more than 3% of their Total Net Worth. Otherwise it should return a positive qualification flag. A `Bad Request` response should be returned for any Investment Amount above $9,000,000. 
+Technologies 
+------------ 
+We encourage you to use those technologies you are most comfortable with. However, the primary tools you'll be expected to use at this job are modern React/Redux. Displaying familiarity with these is useful and encouraged. Solutions that stray too far will not be considered. 
+Questions 
+--------- 
+If you have any questions on the task presented here, we encourage you to reach out to you representative and we will strive to get you answers in a timely fashion. 
+Thank you for your interest and taking the time to complete this. We know your time is valuable and we hope this experience helps both sides get a sense of the other in a quicker, more efficient manner.
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
 ## Available Scripts
