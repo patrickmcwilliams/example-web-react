@@ -4,12 +4,13 @@ export const errorSlice = createSlice({
   name: 'error',
   initialState: {
     approvalForm: {
-        amount: false
+        amount: false,
+        type: false
     }
   },
   reducers: {
     setApprovalError: (state, action:any) => {
-        state.approvalForm = {...action.payload};
+        state.approvalForm = {...state.approvalForm, ...action.payload};
     },
   },
 })

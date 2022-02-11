@@ -13,7 +13,7 @@ const ApprovalForm = () => {
   const errors = useAppSelector((state: { errors: any; }) => state.errors.approvalForm);
   const dispatch = useAppDispatch();
 
-  const  currencyValidatorFormatter = (target:any, key)=>{
+  const  currencyValidatorFormatter = (target:any, key:string)=>{
     let amount:string = target.value;
     if (amount.match(/[^$0-9.,]/)!=null){
       dispatch(setApprovalError({[key]:true}));
@@ -60,6 +60,10 @@ const ApprovalForm = () => {
       </Grid>
       <Grid item xs={rightColumnWidth}>
         <Input
+          placeholder='eg. “Bond”, “Stocks”'
+          required={true}
+          onChange={e=>dispatch(setApprovalValues({type:e.target.value}))}
+          error={errors.type}
         />
       </Grid>
       <Grid item xs={leftColumWidth}>

@@ -4,12 +4,13 @@ export const approvalSlice = createSlice({
   name: 'approvalForm',
   initialState: {
     formValues: {
-        amount: 0
+        amount: 0,
+        type:''
     }
   },
   reducers: {
     setApprovalValues: (state, action:any) => {
-        state.formValues = {...action.payload};
+        state.formValues = {...state.formValues, ...action.payload};
     },
   },
 })
