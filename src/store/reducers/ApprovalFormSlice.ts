@@ -5,7 +5,10 @@ export const approvalSlice = createSlice({
   initialState: {
     formValues: {
         amount: 0,
-        type:''
+        type:'',
+        worth: 0,
+        income: 0,
+        credit: 0,
     }
   },
   reducers: {

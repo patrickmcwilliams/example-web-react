@@ -5,7 +5,10 @@ export const errorSlice = createSlice({
   initialState: {
     approvalForm: {
         amount: false,
-        type: false
+        type: false,
+        worth: false,
+        income: false,
+        credit: false
     }
   },
   reducers: {

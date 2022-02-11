@@ -13,24 +13,38 @@ const ApprovalForm = () => {
   const errors = useAppSelector((state: { errors: any; }) => state.errors.approvalForm);
   const dispatch = useAppDispatch();
 
-  const  currencyValidatorFormatter = (target:any, key:string)=>{
-    let amount:string = target.value;
-    if (amount.match(/[^$0-9.,]/)!=null){
-      dispatch(setApprovalError({[key]:true}));
-      target.value = amount.replace(/[^$0-9.,]/,'')
-    }    
-    if (amount.match(/^\$?(?!0\.00)[1-9]\d{0,2}(,\d{3})*(\.\d\d)?$/)==null){
-      dispatch(setApprovalError({[key]:true}));
+  const currencyValidatorFormatter = (target: any, key: string) => {
+    let amount: string = target.value;
+    if (amount.match(/[^$0-9.,]/) != null) {
+      dispatch(setApprovalError({ [key]: true }));
+      target.value = amount.replace(/[^$0-9.,]/g, '')
+      dispatch(setApprovalValues({ [key]: 0 }));
+    }
+    if (amount.match(/^\$?(?!0\.00)[1-9]\d{0,2}(,\d{3})*(\.\d\d)?$/) == null) {
+      dispatch(setApprovalError({ [key]: true }));
+      dispatch(setApprovalValues({ [key]: 0 }));
     }
     else {
-      dispatch(setApprovalError({[key]:false}));
+      dispatch(setApprovalError({ [key]: false }));
+      amount = target.value;
+      if (amount === '') {
+        amount = '0';
+      }
+      dispatch(setApprovalValues({ [key]: amount.replace(/[^0-9.]/g, '') }));
     }
-    amount = target.value;
-    if (amount === ''){
-      amount = '0';
-    }
-    dispatch(setApprovalValues({[key]:amount}));
   }
+
+  const creditValidatorFormatter = (target: any) => {
+    let score: number = Number(target.value);
+    if (score < 300 || score > 850) {
+      dispatch(setApprovalError({ credit: true }));
+      dispatch(setApprovalValues({ credit: 0 }));
+    }
+    else {
+      dispatch(setApprovalError({ credit: false }));
+      dispatch(setApprovalValues({ credit: score }));
+    }
+  };
 
   return (
     <Grid container className={styles.ApprovalForm} direction="row" spacing={2}>
@@ -44,10 +58,10 @@ const ApprovalForm = () => {
           autoFocus={true}
           placeholder='100,000.00'
           required={true}
-          onChange={e=>currencyValidatorFormatter(e.target, 'amount')}
+          onChange={e => currencyValidatorFormatter(e.target, 'amount')}
           error={errors.amount}
         />
-        <FormHelperText hidden={!errors.amount} 
+        <FormHelperText hidden={!errors.amount}
           error={true}
         >
           Valid currency format only
@@ -62,9 +76,14 @@ const ApprovalForm = () => {
         <Input
           placeholder='eg. “Bond”, “Stocks”'
           required={true}
-          onChange={e=>dispatch(setApprovalValues({type:e.target.value}))}
+          onChange={e => dispatch(setApprovalValues({ type: e.target.value }))}
           error={errors.type}
         />
+        <FormHelperText hidden={!errors.type}
+          error={true}
+        >
+          Cannot be empty
+        </FormHelperText>
       </Grid>
       <Grid item xs={leftColumWidth}>
         <Typography align="right">
@@ -72,7 +91,17 @@ const ApprovalForm = () => {
         </Typography>
       </Grid>
       <Grid item xs={rightColumnWidth}>
-        <Input></Input>
+        <Input
+          placeholder='100,000.00'
+          required={true}
+          onChange={e => currencyValidatorFormatter(e.target, "worth")}
+          error={errors.worth}
+        />
+        <FormHelperText hidden={!errors.worth}
+          error={true}
+        >
+          Valid currency format only
+        </FormHelperText>
       </Grid>
       <Grid item xs={leftColumWidth}>
         <Typography align="right">
@@ -80,7 +109,17 @@ const ApprovalForm = () => {
         </Typography>
       </Grid>
       <Grid item xs={rightColumnWidth}>
-        <Input></Input>
+        <Input
+          placeholder='100,000.00'
+          required={true}
+          onChange={e => currencyValidatorFormatter(e.target, "income")}
+          error={errors.income}
+        />
+        <FormHelperText hidden={!errors.income}
+          error={true}
+        >
+          Valid currency format only
+        </FormHelperText>
       </Grid>
       <Grid item xs={leftColumWidth}>
         <Typography align="right">
@@ -88,7 +127,17 @@ const ApprovalForm = () => {
         </Typography>
       </Grid>
       <Grid item xs={rightColumnWidth}>
-        <Input></Input>
+        <Input
+          placeholder='850'
+          required={true}
+          onChange={e => creditValidatorFormatter(e.target)}
+          error={errors.credit}
+        />
+        <FormHelperText hidden={!errors.credit}
+          error={true}
+        >
+          300-850
+        </FormHelperText>
       </Grid>
     </Grid>
   )
