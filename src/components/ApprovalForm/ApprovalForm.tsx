@@ -46,6 +46,7 @@ const ApprovalForm = () => {
     }
   };
 
+  //TODO: create new custom field component for each field
   return (
     <Grid container className={styles.ApprovalForm} direction="row" spacing={2}>
       <Grid item xs={leftColumWidth}>
