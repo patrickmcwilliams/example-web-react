@@ -8,15 +8,24 @@ const fetch = async (url: string, config: any)=>{
   const income = Number(values.income);
   const credit = Number(values.credit);
   const worth = Number(values.worth);
+  if (amount>9000000){
+    return {
+      status:400
+    };
+  }
   if (amount > (.2*income)||
       credit < 600 ||
       amount > (.03*worth)){
     return {
-      status:'fail',
+      status:200,
+      approved:false,
       message:'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
     };
   }
-  return {status:'success'};
+  return {
+    status:200,
+    approved: true
+  };
 };
 
 const ApprovalService = async (values: any) => {
