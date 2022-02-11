@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import approvalService from '../../service/ApprovalService/ApprovalService';
 import { setLoading } from '../../store/reducers/LoadingSlice';
 import { useHistory } from "react-router-dom";
+import { setDisqualifiedMessage } from '../../store/reducers/ErrorSlice';
 
 
 const SubmitButton = () => {
@@ -23,10 +24,11 @@ const SubmitButton = () => {
     dispatch(setLoading(true));
     const result = await approvalService(values);
     dispatch(setLoading(false));
-    if (result.status === 'success'){
+    if (result.approved === true){
       history.push('\success');
     }
-    else if (result.status === 'fail'){
+    else if (result.approved === false){
+      dispatch(setDisqualifiedMessage(result.message));
       history.push('\disqualify');
     }
     else{

@@ -1,6 +1,8 @@
 import { CircularProgress, Grid } from "@material-ui/core";
 import React, { Fragment } from "react";
 import { Route, Switch } from "react-router-dom";
+import Approved from "../pages/Approved/Approved";
+import Disqualifed from "../pages/Disqualifed/Disqualifed";
 import Home from "../pages/Home/Home";
 import { useAppSelector } from "../store/hooks";
 
@@ -24,12 +26,10 @@ const Routes = (props:any) => {
           component={Home}
         />
         <Route path="/success" 
-          // component={Counter} 
-          render={(props) => (<>success page</>)}
+          component={Approved}
         />
         <Route path="/disqualify" 
-          // component={Counter} 
-          render={(props) => (<>disqualify page</>)}
+          component={Disqualifed}
         />
         <Route path="/**" 
           // component={Counter} 
