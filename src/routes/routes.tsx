@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
+import Home from "../pages/Home/Home";
 
 const Routes = (props:any) => {
 
@@ -8,7 +9,7 @@ const Routes = (props:any) => {
         <Route
           exact
           path="/"
-          render={(props) => (<>landing page</>)}
+          component={Home}
         />
         <Route path="/success" 
           // component={Counter} 

@@ -1,0 +1,10 @@
+.Home {}
+
+.FormContainer {
+    width: 100vw;
+    min-height: 100vh;
+}
+
+.Box {
+    width: 100%;
+}
