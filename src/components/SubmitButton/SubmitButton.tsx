@@ -1,19 +1,37 @@
 import React, { Fragment } from 'react';
 import { Button, FormHelperText, Grid } from '@material-ui/core';
-import { useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import approvalService from '../../service/ApprovalService/ApprovalService';
+import { setLoading } from '../../store/reducers/LoadingSlice';
+import { useHistory } from "react-router-dom";
 
 
 const SubmitButton = () => {
-  const { errors, values } = useAppSelector((state) => {
+  const history = useHistory();
+  const { errors, values, loading } = useAppSelector((state) => {
     return {
       errors: state.errors.approvalForm,
-      values: state.approvalForm.formValues
+      values: state.approvalForm.formValues,
+      loading: state.loading.isLoading
     }
   });
+  const dispatch = useAppDispatch();
+
   const formError = Object.values(errors).some((val) => val);
   const formFilled = Object.values(values).every((val) => val !== '' && val !== 0);
-  const submitHandler = () => {
-    
+  const submitHandler = async () => {
+    dispatch(setLoading(true));
+    const result = await approvalService(values);
+    dispatch(setLoading(false));
+    if (result.status === 'success'){
+      history.push('\success');
+    }
+    else if (result.status === 'fail'){
+      history.push('\disqualify');
+    }
+    else{
+
+    }
   };
 
   return (
@@ -31,7 +49,7 @@ const SubmitButton = () => {
         </FormHelperText>
       </Grid>
 
-      <Button variant='contained' onClick={submitHandler} disabled={formError || !formFilled}>
+      <Button variant='contained' onClick={submitHandler} disabled={formError || !formFilled || loading}>
         Submit
       </Button>
 

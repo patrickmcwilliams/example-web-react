@@ -10,7 +10,12 @@ const ApprovalForm = () => {
   const leftColumWidth = 6;
   const rightColumnWidth = 6;
 
-  const errors = useAppSelector((state: { errors: any; }) => state.errors.approvalForm);
+  const {errors, loading} = useAppSelector((state) => {
+    return {
+      errors: state.errors.approvalForm,
+      loading: state.loading.isLoading
+    }
+  } );
   const dispatch = useAppDispatch();
 
   const currencyValidatorFormatter = (target: any, key: string) => {
@@ -20,7 +25,7 @@ const ApprovalForm = () => {
       target.value = amount.replace(/[^$0-9.,]/g, '')
       dispatch(setApprovalValues({ [key]: 0 }));
     }
-    if (amount.match(/^\$?(?!0\.00)[1-9]\d{0,2}(,\d{3})*(\.\d\d)?$/) == null) {
+    if (amount.match(/^\$?(?!0\.00)[1-9]\d{0,2}(,?\d{3})*(\.\d\d)?$/) == null) {
       dispatch(setApprovalError({ [key]: true }));
       dispatch(setApprovalValues({ [key]: 0 }));
     }
@@ -61,6 +66,7 @@ const ApprovalForm = () => {
           required={true}
           onChange={e => currencyValidatorFormatter(e.target, 'amount')}
           error={errors.amount}
+          disabled={loading}
         />
         <FormHelperText hidden={!errors.amount}
           error={true}
@@ -79,6 +85,7 @@ const ApprovalForm = () => {
           required={true}
           onChange={e => dispatch(setApprovalValues({ type: e.target.value }))}
           error={errors.type}
+          disabled={loading}
         />
         <FormHelperText hidden={!errors.type}
           error={true}
@@ -97,6 +104,7 @@ const ApprovalForm = () => {
           required={true}
           onChange={e => currencyValidatorFormatter(e.target, "worth")}
           error={errors.worth}
+          disabled={loading}
         />
         <FormHelperText hidden={!errors.worth}
           error={true}
@@ -115,6 +123,7 @@ const ApprovalForm = () => {
           required={true}
           onChange={e => currencyValidatorFormatter(e.target, "income")}
           error={errors.income}
+          disabled={loading}
         />
         <FormHelperText hidden={!errors.income}
           error={true}
@@ -133,6 +142,7 @@ const ApprovalForm = () => {
           required={true}
           onChange={e => creditValidatorFormatter(e.target)}
           error={errors.credit}
+          disabled={loading}
         />
         <FormHelperText hidden={!errors.credit}
           error={true}

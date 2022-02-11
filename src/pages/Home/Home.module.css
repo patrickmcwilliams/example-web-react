@@ -8,3 +8,7 @@
 .Box {
     width: 100%;
 }
+
+.Content {
+    margin-top: 2rem;
+}
