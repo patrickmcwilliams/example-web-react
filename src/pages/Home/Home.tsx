@@ -1,54 +1,27 @@
 import React from 'react';
 import styles from './Home.module.css';
-import { Grid, Input, Typography } from '@material-ui/core';
+import { Box, Grid, GridSize } from '@material-ui/core';
+import ApprovalForm from '../../components/ApprovalForm/ApprovalForm';
+import SubmitButton from '../../components/SubmitButton/SubmitButton';
 
-const Home = (props: any) => (
-  <Grid container className={styles.FormContainer} direction="row" justifyContent="center" alignItems="center" >
-    <Grid item xs={6}>
-      <Grid container className={styles.Form} direction="row" spacing={2}>
-        <Grid item xs={6}>
-          <Typography align="right">
-            Investment Amount:
-          </Typography>
-        </Grid>
-        <Grid item xs={6}>
-          <Input></Input>
-        </Grid>
-        <Grid item xs={6}>
-          <Typography align="right">
-            Investment Type:
-          </Typography>
-        </Grid>
-        <Grid item xs={6}>
-          <Input></Input>
-        </Grid>
-        <Grid item xs={6}>
-          <Typography align="right">
-            Total Net Worth:
-          </Typography>
-        </Grid>
-        <Grid item xs={6}>
-          <Input></Input>
-        </Grid>
-        <Grid item xs={6}>
-          <Typography align="right">
-            Estimated Yearly Income:
-          </Typography>
-        </Grid>
-        <Grid item xs={6}>
-          <Input></Input>
-        </Grid>
-        <Grid item xs={6}>
-          <Typography align="right">
-            Estimated Credit Score:
-          </Typography>
-        </Grid>
-        <Grid item xs={6}>
-          <Input></Input>
-        </Grid>
+const Home = () => {
+  const sizes:{xs:GridSize,s:GridSize,md:GridSize,lg:GridSize} = {xs:8, s:6, md:6, lg:4};
+
+  return (
+    <Grid container className={styles.FormContainer} 
+          direction="column" justifyContent="center" 
+          alignItems="center" spacing={2}
+    >
+      <Grid item {...sizes}>
+        <ApprovalForm />
+      </Grid>
+      <Grid {...sizes} className={styles.Box} item>
+        <Box display="flex" alignItems='center' justifyContent="flex-end">
+          <SubmitButton/>
+        </Box>
       </Grid>
     </Grid>
-  </Grid>
-);
+  )
+};
 
 export default Home;
