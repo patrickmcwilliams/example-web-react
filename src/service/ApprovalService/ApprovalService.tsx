@@ -1,16 +1,22 @@
 const APPROVAL_SERVICE_URL = 'https://example.com/approve/'
 
-const fetch = async (url: string, config: any)=>{
+const fetchStub = async (url: string, config: any)=>{
   const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
-  await delay(5000);
-  const values = JSON.parse(config.body);
-  const amount = Number(values.amount);
-  const income = Number(values.income);
-  const credit = Number(values.credit);
-  const worth = Number(values.worth);
+  await delay(1000);
+  const amount = Number(config.body.get('amount'));
+  const income = Number(config.body.get('income'));
+  const credit = Number(config.body.get('credit'));
+  const worth = Number(config.body.get('worth'));
   if (amount>9000000){
     return {
-      status:400
+      ok: false,
+      status:400,
+      json: async ()=>{
+        return {
+          approved:false,
+          message:'Investment Amount above $9,000,000 not allowed'
+        }
+      }
     };
   }
   if (amount > (.2*income)||
@@ -18,25 +24,52 @@ const fetch = async (url: string, config: any)=>{
       amount > (.03*worth)){
     return {
       status:200,
-      approved:false,
-      message:'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
+      ok: true,
+      json: async ()=>{
+        return {
+          approved:false,
+          message:'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
+        }
+      }
     };
   }
   return {
     status:200,
-    approved: true
+    ok: true,
+    json: async ()=>{
+      return {
+        approved:true,
+        message:''
+      }
+    }
   };
 };
 
 const ApprovalService = async (values: any) => {
+  const body = new FormData();
+  for (var value in values) {
+    body.append(value, values[value]);
+  }
+
   const config = {
-    body: JSON.stringify(values),
+    body: body,
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/x-www-form-urlencoded'
     },
+    mode: 'no-cors' as RequestMode,
   };
-  return fetch(APPROVAL_SERVICE_URL, config);
+  let request;
+  if (false && 'Cypress' in window){
+    //TODO: cant get cy.intercept to return mocked response
+    console.log("detected cypress tests running\n defaulting to fetch")
+    request = fetch(APPROVAL_SERVICE_URL, config);
+  }
+  else {
+    request = fetchStub(APPROVAL_SERVICE_URL, config);
+  }
+  
+  return request;
 };
 
 

@@ -60,7 +60,7 @@ const ApprovalForm = () => {
         </Typography>
       </Grid>
       <Grid item xs={rightColumnWidth}>
-        <Input
+        <Input id='investment_amount'
           autoFocus={true}
           placeholder='100,000.00'
           required={true}
@@ -68,7 +68,7 @@ const ApprovalForm = () => {
           error={errors.amount}
           disabled={loading}
         />
-        <FormHelperText hidden={!errors.amount}
+        <FormHelperText id='investment_amount_error' hidden={!errors.amount}
           error={true}
         >
           Valid currency format only
@@ -80,14 +80,14 @@ const ApprovalForm = () => {
         </Typography>
       </Grid>
       <Grid item xs={rightColumnWidth}>
-        <Input
+        <Input id='investment_type'
           placeholder='eg. “Bond”, “Stocks”'
           required={true}
           onChange={e => dispatch(setApprovalValues({ type: e.target.value }))}
           error={errors.type}
           disabled={loading}
         />
-        <FormHelperText hidden={!errors.type}
+        <FormHelperText id='investment_type_error' hidden={!errors.type}
           error={true}
         >
           Cannot be empty
@@ -99,14 +99,14 @@ const ApprovalForm = () => {
         </Typography>
       </Grid>
       <Grid item xs={rightColumnWidth}>
-        <Input
+        <Input id='net_worth'
           placeholder='100,000.00'
           required={true}
           onChange={e => currencyValidatorFormatter(e.target, "worth")}
           error={errors.worth}
           disabled={loading}
         />
-        <FormHelperText hidden={!errors.worth}
+        <FormHelperText id='net_worth_error' hidden={!errors.worth}
           error={true}
         >
           Valid currency format only
@@ -118,14 +118,14 @@ const ApprovalForm = () => {
         </Typography>
       </Grid>
       <Grid item xs={rightColumnWidth}>
-        <Input
+        <Input id='income'
           placeholder='100,000.00'
           required={true}
           onChange={e => currencyValidatorFormatter(e.target, "income")}
           error={errors.income}
           disabled={loading}
         />
-        <FormHelperText hidden={!errors.income}
+        <FormHelperText id='income_error' hidden={!errors.income}
           error={true}
         >
           Valid currency format only
@@ -137,14 +137,14 @@ const ApprovalForm = () => {
         </Typography>
       </Grid>
       <Grid item xs={rightColumnWidth}>
-        <Input
+        <Input id='credit_score'
           placeholder='850'
           required={true}
           onChange={e => creditValidatorFormatter(e.target)}
           error={errors.credit}
           disabled={loading}
         />
-        <FormHelperText hidden={!errors.credit}
+        <FormHelperText id='credit_score_error' hidden={!errors.credit}
           error={true}
         >
           300-850

@@ -24,11 +24,15 @@ const SubmitButton = () => {
     dispatch(setLoading(true));
     const result = await approvalService(values);
     dispatch(setLoading(false));
-    if (result.approved === true){
+    if (!result.ok){
+      return
+    }
+    const body = await result.json();
+    if (body.approved === true){
       history.push('\success');
     }
-    else if (result.approved === false){
-      dispatch(setDisqualifiedMessage(result.message));
+    else if (body.approved === false){
+      dispatch(setDisqualifiedMessage(body.message));
       history.push('\disqualify');
     }
     else{
@@ -39,19 +43,19 @@ const SubmitButton = () => {
   return (
     <Fragment>
       <Grid container direction='column'>
-        <FormHelperText hidden={!formError}
+        <FormHelperText id='form_error' hidden={!formError}
           error={true}
         >
           Please fix issues in form
         </FormHelperText>
-        <FormHelperText hidden={formFilled}
+        <FormHelperText id='form_help' hidden={formFilled}
           error={false}
         >
           Please fill out entire form
         </FormHelperText>
       </Grid>
 
-      <Button variant='contained' onClick={submitHandler} disabled={formError || !formFilled || loading}>
+      <Button id='submit_button' variant='contained' onClick={submitHandler} disabled={formError || !formFilled || loading}>
         Submit
       </Button>
 
