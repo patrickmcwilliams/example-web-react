@@ -102,4 +102,40 @@ describe('Validate form',()=>{
         cy.get('#form_error').should('be.visible');
         cy.get('#submit_button').should('be.disabled');
     });
+
+    it('submits and gets approved', ()=>{
+        fillForm();
+        cy.get('#submit_button').click();
+        cy.url().should('include', 'success');
+    });
+
+    it('submits and gets denied by credit', ()=>{
+        fillForm();
+        cy.get('#credit_score').clear().click().type('350')
+        cy.get('#submit_button').click();
+        cy.url().should('include', 'disqualify');
+    });
+
+    it('submits and gets denied by investment and income', ()=>{
+        fillForm();
+        cy.get('#net_worth').clear().click().type('1000000000000')
+        cy.get('#investment_amount').clear().click().type('20001')
+        cy.get('#submit_button').click();
+        cy.url().should('include', 'disqualify');
+    });
+
+    it('submits and gets denied by investment and net worth', ()=>{
+        fillForm();
+        cy.get('#income').clear().click().type('1000000000000')
+        cy.get('#investment_amount').clear().click().type('30001')
+        cy.get('#submit_button').click();
+        cy.url().should('include', 'disqualify');
+    });
+
+    it('submits and gets denied by investment amount', ()=>{
+        fillForm();
+        cy.get('#investment_amount').clear().click().type('9000000')
+        cy.get('#submit_button').click();
+        cy.url().should('include', 'disqualify');
+    });
 });

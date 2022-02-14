@@ -23,7 +23,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "cypress": "cypress open",
+    "cypress": "CYPRESS_REMOTE_DEBUGGING_PORT=9222 cypress open",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

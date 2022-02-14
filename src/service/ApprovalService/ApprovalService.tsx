@@ -1,8 +1,8 @@
 const APPROVAL_SERVICE_URL = 'https://example.com/approve/'
 
-const fetch = async (url: string, config: any)=>{
+const fetchStub = async (url: string, config: any)=>{
   const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
-  await delay(5000);
+  await delay(1000);
   const amount = Number(config.body.get('amount'));
   const income = Number(config.body.get('income'));
   const credit = Number(config.body.get('credit'));
@@ -59,7 +59,16 @@ const ApprovalService = async (values: any) => {
     },
     mode: 'no-cors' as RequestMode,
   };
-  const request = fetch(APPROVAL_SERVICE_URL, config);
+  let request;
+  if (false && 'Cypress' in window){
+    //TODO: cant get cy.intercept to return mocked response
+    console.log("detected cypress tests running\n defaulting to fetch")
+    request = fetch(APPROVAL_SERVICE_URL, config);
+  }
+  else {
+    request = fetchStub(APPROVAL_SERVICE_URL, config);
+  }
+  
   return request;
 };
 
